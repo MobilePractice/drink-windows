@@ -1,0 +1,160 @@
+﻿<Page
+    x:Class="DrinkApp.Views.Dashboard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DrinkApp.Views"
+    xmlns:c="using:DrinkApp.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <c:PageHeader x:Name="pageHeader" />
+
+        <ScrollViewer
+            Grid.Row="1"
+            EntranceNavigationTransitionInfo.IsTargetElement="True"
+            VerticalScrollBarVisibility="Auto"
+            VerticalScrollMode="Auto"
+            HorizontalScrollBarVisibility="Disabled"
+            HorizontalScrollMode="Disabled"
+            Background="{ThemeResource ApplicationPageBackgroundCustomThemeBrush}">
+
+            <RelativePanel>
+                <Image
+                    x:Name="TeaserImage"
+                    Margin="0"
+                    Stretch="Fill"
+                    Source="ms-appx:///Assets/teaser.png"/>
+
+                <StackPanel
+                    x:Name="WelcomePanel"
+                    Orientation="Vertical"
+                    RelativePanel.AlignRightWith="TeaserImage"
+                    RelativePanel.AlignLeftWith="TeaserImage"
+                    RelativePanel.Below="TeaserImage"
+                    Background="White"
+                    Margin="10,-20,10,5"
+                    BorderThickness="1"
+                    BorderBrush="#FF7A7A7A">
+
+                    <TextBox
+                        Style="{ThemeResource GreetingsText}"
+                        Text="Good afternoon, Pauline" IsReadOnly="True"/>
+
+                    <RelativePanel>
+                        <AppBarButton
+                            x:Name="MapPinIcon"
+                            Icon="Map"/>
+
+                        <TextBlock
+                            x:Name="StoreName"
+                            Text="No Store Found"
+                            RelativePanel.RightOf="MapPinIcon"
+                            Padding="0,10,0,0"/>
+                        <TextBlock
+                            x:Name="StoreAddress"
+                            Text=""
+                            RelativePanel.RightOf="MapPinIcon"
+                            RelativePanel.Below="StoreName"/>
+                    </RelativePanel>
+
+                    <RelativePanel
+                        BorderThickness="0,0,0,0"
+                        BorderBrush="#FF7A7A7A">
+
+                        <Button
+                            Name="ChangeMyStoreButton"
+                            Background="White"
+                            BorderThickness="0,1,0,0"
+                            BorderBrush="#FF7A7A7A"
+                            RelativePanel.AlignLeftWithPanel="True"
+                            Width="160"
+                            Padding="5,5,5,10">
+                            <TextBlock Text="Change My Store"/>
+                        </Button>
+
+                        <Button
+                            Name="MyOrdersButton"
+                            Background="White"
+                            BorderThickness="1,1,0,0"
+                            BorderBrush="#FF7A7A7A"
+                            RelativePanel.AlignRightWithPanel="True"
+                            Width="160"
+                            Padding="5,5,5,10">
+                            <TextBlock Text="My Orders"/>
+                        </Button>
+                    </RelativePanel>
+
+                </StackPanel>
+
+                <StackPanel
+                    x:Name="SuggestionPanel"
+                    Orientation="Vertical"
+                    Margin="0,10,0,0"
+                    RelativePanel.Below="WelcomePanel">
+
+                    <StackPanel
+                        x:Name="ClosestStorePanel"
+                        Background="White">
+                        <TextBox
+                            Name="ClosestStore"
+                            Style="{ThemeResource HeaderText}"
+                            Text="NO STORE FOUND"/>
+                    </StackPanel>
+
+                    <TextBlock
+                        Text="Wine"
+                        Style="{ThemeResource BannerHeaderText}"
+                        RelativePanel.Above="WineButton"/>
+                    <Button
+                        Name="WineButton"
+                        Style="{ThemeResource BannerButton}"
+                        Click="BannerButton_Click"
+                        Tag="Wines">
+                        <Image
+                            x:Name="WineImage"
+                            Source="ms-appx:///Assets/wine-banner.png"
+                            Style="{ThemeResource BannerImage}"/>
+                    </Button>
+
+                    <TextBlock
+                        Text="Beer"
+                        Style="{ThemeResource BannerHeaderText}"
+                        RelativePanel.Above="BeerButton" />
+                    <Button
+                        Name="BeerButton"
+                        Style="{ThemeResource BannerButton}"
+                        Click="BannerButton_Click"
+                        Tag="Beers">
+                        <Image
+                            x:Name="BeerImage"
+                            Source="ms-appx:///Assets/beer-banner.png"
+                            Style="{ThemeResource BannerImage}"/>
+                    </Button>
+
+                    <TextBlock
+                        Text="Spirits"
+                        Style="{ThemeResource BannerHeaderText}"
+                        RelativePanel.Above="SpiritsButton" />
+                    <Button
+                        Name="SpiritsButton"
+                        Style="{ThemeResource BannerButton}"
+                        Click="BannerButton_Click"
+                        Tag="Spirits">
+                        <Image
+                            x:Name="SpiritsImage"
+                            Source="ms-appx:///Assets/spirits-banner.png"
+                            Style="{ThemeResource BannerImage}"/>
+                    </Button>
+                </StackPanel>
+            </RelativePanel>
+        </ScrollViewer>
+    </Grid>
+</Page>
