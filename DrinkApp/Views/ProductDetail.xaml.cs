@@ -17,8 +17,6 @@ using Windows.UI.Xaml.Media.Animation;
 using DrinkApp.Utils;
 using DrinkApp.Model;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace DrinkApp.Views {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
@@ -46,6 +44,14 @@ namespace DrinkApp.Views {
             SystemNavigationManager systemNavigationManager = SystemNavigationManager.GetForCurrentView();
             systemNavigationManager.BackRequested += OnBackRequested;
             systemNavigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e) {
+            base.OnNavigatedFrom(e);
+
+            SystemNavigationManager systemNavigationManager = SystemNavigationManager.GetForCurrentView();
+            systemNavigationManager.BackRequested -= OnBackRequested;
+            systemNavigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
         }
 
         private void OnBackRequested(object sender, BackRequestedEventArgs e) {

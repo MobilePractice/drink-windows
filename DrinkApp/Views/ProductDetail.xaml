@@ -23,6 +23,7 @@
         <c:PageHeader x:Name="pageHeader" />
 
         <Grid Grid.Row="1">
+            <Image Source="{x:Bind SelectedProduct.Thumbnail}"/>
             <TextBlock Style="{ThemeResource TitleTextBlockStyle}" 
                        HorizontalAlignment="Center" 
                        VerticalAlignment="Center"

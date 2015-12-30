@@ -65,10 +65,11 @@
 
         <c:PageHeader x:Name="pageHeader" />
 
-        <ListView x:Name="ProductListView"
+        <ListView x:Name="SearchResultListView"
                   ItemTemplate="{StaticResource SearchResultListViewTemplate}"
                   SelectionMode="Single"
                   ShowsScrollingPlaceholders="True"
+                  IsItemClickEnabled="True"
                   ItemClick="ListView_ItemClick"
                   Grid.Row="1">
             <ListView.GroupStyle>

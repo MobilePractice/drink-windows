@@ -24,6 +24,7 @@ namespace DrinkApp.Views {
     /// </summary>
     public sealed partial class SearchResult : Page {
         private ObservableCollection<Product> _products;
+        private Product selectedProduct;
 
         public SearchResult() {
             this.InitializeComponent();
@@ -37,7 +38,7 @@ namespace DrinkApp.Views {
         }
 
         private async void LoadProductList(string serviceType) {
-            ProductListView.Items.Clear();
+            SearchResultListView.Items.Clear();
 
             switch (serviceType) {
                 case "Beers":
@@ -59,11 +60,12 @@ namespace DrinkApp.Views {
 
             SearchResultCVS.Source = Product.GetProductListGrouped(_products);
 
-            ProductListView.ItemsSource = SearchResultCVS.View;
+            SearchResultListView.ItemsSource = SearchResultCVS.View;
         }
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e) {
-            Product selectedProduct = e.ClickedItem as Product;
+            // The clicked item it is the new selected product
+            selectedProduct = e.ClickedItem as Product;
 
             this.Frame.Navigate(
                 typeof(ProductDetail),
