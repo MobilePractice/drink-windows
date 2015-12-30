@@ -1,0 +1,87 @@
+﻿<Page
+    x:Class="DrinkApp.Views.SearchResult"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DrinkApp.Views"
+    xmlns:c="using:DrinkApp.Controls"
+    xmlns:model="using:DrinkApp.Model"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    NavigationCacheMode="Enabled"
+    mc:Ignorable="d">
+
+    <Page.Transitions>
+        <TransitionCollection>
+            <EntranceThemeTransition />
+        </TransitionCollection>
+    </Page.Transitions>
+
+    <Page.Resources>
+        <!-- Use a collection view source for content that presents itself as a list of items that can be grouped or sorted.  Otherwise, you can use x:Bind
+        directly on the ListView's item source to for further optimization. Please see the AppUIBasics sample for an example of how to do this.  -->
+        <CollectionViewSource x:Name="SearchResultCVS"  
+                              IsSourceGrouped="True" />
+
+        <!-- When using x:Bind, you need to set x:DataType -->
+        <DataTemplate x:Name="SearchResultListViewTemplate" 
+                      x:DataType="model:Product">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image x:Name="Thumbnail"
+                       Grid.RowSpan="2"
+                       Width="32"
+                       Height="Auto"
+                       Margin="6"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Source="{x:Bind Thumbnail}" />
+                <TextBlock Grid.Column="1"
+                           Text="{x:Bind Name}" 
+                           x:Phase="1"  
+                           Style="{ThemeResource BaseTextBlockStyle}"
+                           Margin="12,6,0,0"/>
+                <TextBlock  Grid.Column="1"
+                            Grid.Row="1"
+                            Text="{x:Bind PrimaryCategory}" 
+                            x:Phase="2"
+                            Style="{ThemeResource BodyTextBlockStyle}"
+                            Margin="12,0,0,6"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <c:PageHeader x:Name="pageHeader" />
+
+        <ListView x:Name="ProductListView"
+                  ItemTemplate="{StaticResource SearchResultListViewTemplate}"
+                  SelectionMode="Single"
+                  ShowsScrollingPlaceholders="True"
+                  ItemClick="ListView_ItemClick"
+                  Grid.Row="1">
+            <ListView.GroupStyle>
+                <GroupStyle >
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate x:DataType="model:GroupInfoList">
+                            <TextBlock Text="{x:Bind Key}" 
+                                       Style="{ThemeResource TitleTextBlockStyle}"/>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </ListView.GroupStyle>
+        </ListView>
+
+    </Grid>
+</Page>

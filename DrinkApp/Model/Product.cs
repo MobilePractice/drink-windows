@@ -75,5 +75,29 @@ namespace DrinkApp.Model
         public async static Task<ObservableCollection<Product>> GetSpirits() {
             return await DataSource.GetSpiritsAsync();
         }
+
+        public async static Task<ObservableCollection<Product>> GetProductByStoreId(int storeId = 534) {
+            return await DataSource.GetProductByStoreId(storeId);
+        }
+
+        public static ObservableCollection<GroupInfoList> GetProductListGrouped(ObservableCollection<Product> products) {
+            ObservableCollection<GroupInfoList> groups = new ObservableCollection<GroupInfoList>();
+
+            var query = from item in products
+                        group item by item.Name[0] into g
+                        orderby g.Key
+                        select new { GroupName = g.Key, Items = g };
+
+            foreach (var g in query) {
+                GroupInfoList info = new GroupInfoList();
+                info.Key = g.GroupName;
+                foreach (var item in g.Items) {
+                    info.Add(item);
+                }
+                groups.Add(info);
+            }
+
+            return groups;
+        }
     }
 }

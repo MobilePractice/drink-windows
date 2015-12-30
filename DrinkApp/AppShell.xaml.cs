@@ -38,7 +38,7 @@ namespace DrinkApp {
                 {
                     Symbol = Symbol.Find,
                     Label = "Search",
-                    DestPage = typeof(Search)
+                    DestPage = typeof(SearchResult)
                 },
                 new NavMenuItem()
                 {

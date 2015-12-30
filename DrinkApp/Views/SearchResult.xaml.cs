@@ -12,46 +12,63 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using DrinkApp.Views;
 using DrinkApp.Utils;
 using DrinkApp.Model;
-
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
+using System.Collections.ObjectModel;
+using Windows.UI.Xaml.Media.Animation;
 
 namespace DrinkApp.Views {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Products : Page {
-        public IEnumerable<Product> ProductList { get; set; }
+    public sealed partial class SearchResult : Page {
+        private ObservableCollection<Product> _products;
 
-        public Products() {
+        public SearchResult() {
             this.InitializeComponent();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
-            LoadProductList(e.Parameter.ToString());
+            string serviceType = e.Parameter as string;
+            LoadProductList(serviceType);
 
             base.OnNavigatedTo(e);
         }
 
         private async void LoadProductList(string serviceType) {
+            ProductListView.Items.Clear();
+
             switch (serviceType) {
                 case "Beers":
-                    ProductList = await Product.GetBeers();
+                    _products = await Product.GetBeers();
                     break;
 
                 case "Wines":
-                    ProductList = await Product.GetWines();
+                    _products = await Product.GetWines();
                     break;
 
                 case "Spirits":
-                    ProductList = await Product.GetSpirits();
+                    _products = await Product.GetSpirits();
                     break;
 
                 default:
-                    ProductList = await Product.GetBeers();
+                    _products = await Product.GetProductByStoreId();
                     break;
             }
+
+            SearchResultCVS.Source = Product.GetProductListGrouped(_products);
+
+            ProductListView.ItemsSource = SearchResultCVS.View;
+        }
+
+        private void ListView_ItemClick(object sender, ItemClickEventArgs e) {
+            Product selectedProduct = e.ClickedItem as Product;
+
+            this.Frame.Navigate(
+                typeof(ProductDetail),
+                selectedProduct,
+                new DrillInNavigationTransitionInfo());
         }
     }
 }

@@ -126,14 +126,14 @@
     <Compile Include="Views\Orders.xaml.cs">
       <DependentUpon>Orders.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Products.xaml.cs">
-      <DependentUpon>Products.xaml</DependentUpon>
+    <Compile Include="Views\ProductDetail.xaml.cs">
+      <DependentUpon>ProductDetail.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Profile.xaml.cs">
       <DependentUpon>Profile.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Search.xaml.cs">
-      <DependentUpon>Search.xaml</DependentUpon>
+    <Compile Include="Views\SearchResult.xaml.cs">
+      <DependentUpon>SearchResult.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TopPicks.xaml.cs">
       <DependentUpon>TopPicks.xaml</DependentUpon>
@@ -195,7 +195,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Products.xaml">
+    <Page Include="Views\ProductDetail.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -203,7 +203,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Search.xaml">
+    <Page Include="Views\SearchResult.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

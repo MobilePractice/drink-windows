@@ -29,7 +29,7 @@ namespace DrinkApp.Views {
             Button clickedButton = sender as Button;
             if (clickedButton != null) {
                 this.Frame.Navigate(
-                    typeof(Products),
+                    typeof(SearchResult),
                     clickedButton.Tag,
                     new Windows.UI.Xaml.Media.Animation.DrillInNavigationTransitionInfo());
             }

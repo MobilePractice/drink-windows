@@ -115,8 +115,8 @@ namespace DrinkApp.Services {
             return _dataSource._nearestStores;
         }
 
-        internal static async Task<Store> GetStoreByIdAsync(int id) {
-            string endpoint = String.Format("/stores/{0}", id);
+        internal static async Task<Store> GetStoreByIdAsync(int storeId = 534) {
+            string endpoint = String.Format("/stores/{0}", storeId);
             await _dataSource.GetResponseFromService(ServiceType.Store , endpoint);
 
             return _dataSource._stores.Single();
@@ -146,11 +146,18 @@ namespace DrinkApp.Services {
             return _dataSource._spirits;
         }
 
-        internal static async Task<Product> GetProductByIdAsync(int id) {
-            string endpoint = String.Format("/products/{0}", id);
+        internal static async Task<Product> GetProductByIdAsync(int productId = 288506) {
+            string endpoint = String.Format("/products/{0}", productId);
             await _dataSource.GetResponseFromService(ServiceType.Product, endpoint);
 
             return _dataSource._products.Single();
+        }
+
+        internal static async Task<ObservableCollection<Product>> GetProductByStoreId(int storeId = 534) {
+            string endpoint = String.Format("/products?store_id={0}", storeId);
+            await _dataSource.GetResponseFromService(ServiceType.Product, endpoint);
+
+            return _dataSource._products;
         }
 
         #endregion
