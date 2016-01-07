@@ -17,12 +17,6 @@
     </Page.Transitions>
 
     <Page.Resources>
-        <!-- Use a collection view source for content that presents itself as a list of items that can be grouped or sorted.  Otherwise, you can use x:Bind
-        directly on the ListView's item source to for further optimization. Please see the AppUIBasics sample for an example of how to do this.  -->
-        <CollectionViewSource x:Name="SearchResultCVS"  
-                              IsSourceGrouped="True" />
-
-        <!-- When using x:Bind, you need to set x:DataType -->
         <DataTemplate x:Name="SearchResultListViewTemplate" 
                       x:DataType="model:Product">
             <Grid>
@@ -35,6 +29,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Image x:Name="Thumbnail"
+                       x:Phase="2"
                        Grid.RowSpan="2"
                        Width="32"
                        Height="Auto"
@@ -50,7 +45,7 @@
                 <TextBlock  Grid.Column="1"
                             Grid.Row="1"
                             Text="{x:Bind PrimaryCategory}" 
-                            x:Phase="2"
+                            x:Phase="1"
                             Style="{ThemeResource BodyTextBlockStyle}"
                             Margin="12,0,0,6"/>
             </Grid>
@@ -65,24 +60,21 @@
 
         <c:PageHeader x:Name="pageHeader" />
 
+            <ProgressRing x:Name="ProgressRing"
+                          IsActive="True"
+                          Width="130"
+                          Height="50"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Grid.Row="1"/>
+
         <ListView x:Name="SearchResultListView"
                   ItemTemplate="{StaticResource SearchResultListViewTemplate}"
-                  SelectionMode="Single"
+                  SelectionMode="Extended"
                   ShowsScrollingPlaceholders="True"
                   IsItemClickEnabled="True"
                   ItemClick="ListView_ItemClick"
                   Grid.Row="1">
-            <ListView.GroupStyle>
-                <GroupStyle >
-                    <GroupStyle.HeaderTemplate>
-                        <DataTemplate x:DataType="model:GroupInfoList">
-                            <TextBlock Text="{x:Bind Key}" 
-                                       Style="{ThemeResource TitleTextBlockStyle}"/>
-                        </DataTemplate>
-                    </GroupStyle.HeaderTemplate>
-                </GroupStyle>
-            </ListView.GroupStyle>
         </ListView>
-
     </Grid>
 </Page>

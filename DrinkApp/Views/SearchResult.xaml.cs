@@ -23,8 +23,8 @@ namespace DrinkApp.Views {
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class SearchResult : Page {
-        private ObservableCollection<Product> _products;
-        private Product selectedProduct;
+        private ObservableCollection<Product> _products = new ObservableCollection<Product>();
+        private Product _selectedProduct;
 
         public SearchResult() {
             this.InitializeComponent();
@@ -38,7 +38,9 @@ namespace DrinkApp.Views {
         }
 
         private async void LoadProductList(string serviceType) {
-            SearchResultListView.Items.Clear();
+            _products.Clear();
+            RefreshProductList();
+            ProgressRing.IsActive = true;
 
             switch (serviceType) {
                 case "Beers":
@@ -57,19 +59,22 @@ namespace DrinkApp.Views {
                     _products = await Product.GetProductByStoreId();
                     break;
             }
+ 
+            RefreshProductList();
+        }
 
-            SearchResultCVS.Source = Product.GetProductListGrouped(_products);
-
-            SearchResultListView.ItemsSource = SearchResultCVS.View;
+        private void RefreshProductList() {
+            ProgressRing.IsActive = false;
+            SearchResultListView.ItemsSource = _products;
         }
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e) {
             // The clicked item it is the new selected product
-            selectedProduct = e.ClickedItem as Product;
+            _selectedProduct = e.ClickedItem as Product;
 
             this.Frame.Navigate(
                 typeof(ProductDetail),
-                selectedProduct,
+                _selectedProduct,
                 new DrillInNavigationTransitionInfo());
         }
     }
