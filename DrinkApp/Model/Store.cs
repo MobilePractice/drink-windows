@@ -1,17 +1,11 @@
-﻿using System;
+﻿using DrinkApp.Services;
+using DrinkApp.Utils;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.Data.Json;
 using Windows.Devices.Geolocation;
-using Windows.Devices.Geolocation.Geofencing;
-using Windows.Storage;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
-using DrinkApp.Utils;
-using DrinkApp.Services;
 
 namespace DrinkApp.Model {
     // Store Hours
@@ -142,16 +136,32 @@ namespace DrinkApp.Model {
         public string Distance { get; private set; }
         public ObservableCollection<Product> Products { get; private set; }
 
-        public async static Task<Store> GetStoreById(int id) {
-            return await DataSource.GetStoreByIdAsync(id);
+        public async static Task<ObservableCollection<Store>> GetStores() {
+            return await DataSource.GetStoresAsync(Utils.Endpoint.Stores);
         }
 
-        public async static Task<ObservableCollection<Store>> GetStores() {
-            return await DataSource.GetStoresAsync();
+        public async static Task<Store> GetStoreById(int storeId = 534) {
+            string endpoint = String.Format(Utils.Endpoint.StoresById, storeId);
+
+            return (await DataSource.GetStoresAsync(endpoint)).Single();
         }
 
         public async static Task<ObservableCollection<Store>> GetStoresByLatLngStores(BasicGeoposition _position) {
-            return await DataSource.GetStoresByLatLngAsync(_position);
+            string endpoint = String.Format(Utils.Endpoint.StoresNearPoint, _position.Latitude, _position.Longitude);
+
+            return await DataSource.GetStoresAsync(endpoint);
+        }
+
+        public async static Task<ObservableCollection<Store>> GetStoresWithProduct(int productId = 288506) {
+            string endpoint = String.Format(Utils.Endpoint.StoresWithProduct, productId);
+
+            return await DataSource.GetStoresAsync(endpoint);
+        }
+
+        public async static Task<ObservableCollection<Store>> GetStoresNearPointWithProduct(BasicGeoposition _position, int productId = 288506) {
+            string endpoint = String.Format(Utils.Endpoint.StoresNearPointWithProduct, _position.Latitude, _position.Longitude, productId);
+
+            return await DataSource.GetStoresAsync(endpoint);
         }
     }
 }

@@ -17,13 +17,13 @@ namespace DrinkApp.Model
     /// Inventory data model
     /// </summary>
     public class Inventory {
-        public Inventory(Store store, Product product, bool isDead, int quantity, DateTime updatedOn, DateTime updatedAt) {
-            this.Store = store;
-            this.Product = product;
-            this.IsDead = isDead;
-            this.Quantity = quantity;
-            this.UpdatedOn = updatedOn;
-            this.UpdatedAt = updatedAt;
+        public Inventory(dynamic inventory) {
+            //this.Store = store;
+            //this.Product = product;
+            this.IsDead = (bool)inventory["isDead"];
+            this.Quantity = (int)inventory["quantity"];
+            //this.UpdatedOn = updatedOn;
+            //this.UpdatedAt = updatedAt;
         }
 
         public Store Store { get; private set; }

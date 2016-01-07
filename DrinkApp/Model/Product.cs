@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DrinkApp.Services;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.Data.Json;
-using Windows.Devices.Geolocation;
-using Windows.Devices.Geolocation.Geofencing;
-using Windows.Storage;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
-using DrinkApp.Services;
 
-namespace DrinkApp.Model
-{
+namespace DrinkApp.Model {
     /// <summary>
     /// Product data model (items)
     /// </summary>
@@ -26,7 +17,7 @@ namespace DrinkApp.Model
             this.IsDiscontinued = (bool)product["is_discontinued"];
             this.PrimaryCategory = (string)product["primary_category"];
             this.SecondaryCategory = (string)product["secondary_category"];
-            this.Thumbnail = (string)product["image_thumb_url"];
+            this.Thumbnail = product["image_thumb_url"] != null ? (string)product["image_thumb_url"] : "";
         }
 
         public int Id { get; private set;  }
@@ -51,33 +42,32 @@ namespace DrinkApp.Model
         public string Thumbnail { get; private set;  }
         public Inventory Inventory { get; private set;  }
 
-        public async static Task<Product> GetProduct(int id) {
-            return await DataSource.GetProductByIdAsync(id);
-        }
-
-        public async static Task<ObservableCollection<Product>> Products() {
-
-            return await DataSource.GetProductsAsync();
-        }
-
         public async static Task<ObservableCollection<Product>> GetProducts() {
-            return await DataSource.GetProductsAsync();
+            return await DataSource.GetProductsAsync(Utils.Endpoint.Products);
+        }
+
+        public async static Task<Product> GetProduct(int productId = 288506) {
+            string endpoint = String.Format(Utils.Endpoint.ProductsById, productId);
+
+            return (await DataSource.GetProductsAsync(endpoint)).Single();
+        }
+
+        public async static Task<ObservableCollection<Product>> GetProductsInStore(int storeId = 534) {
+            string endpoint = String.Format(Utils.Endpoint.ProductsInStore, storeId);
+
+            return await DataSource.GetProductsAsync(endpoint);
         }
 
         public async static Task<ObservableCollection<Product>> GetBeers() {
-            return await DataSource.GetBeersAsync();
+            return await DataSource.GetProductsAsync(Utils.Endpoint.Beers);
         }
 
         public async static Task<ObservableCollection<Product>> GetWines() {
-            return await DataSource.GetWinesAsync();
+            return await DataSource.GetProductsAsync(Utils.Endpoint.Wines);
         }
 
         public async static Task<ObservableCollection<Product>> GetSpirits() {
-            return await DataSource.GetSpiritsAsync();
-        }
-
-        public async static Task<ObservableCollection<Product>> GetProductByStoreId(int storeId = 534) {
-            return await DataSource.GetProductByStoreId(storeId);
+            return await DataSource.GetProductsAsync(Utils.Endpoint.Spirits);
         }
 
         public static ObservableCollection<GroupInfoList> GetProductListGrouped(ObservableCollection<Product> products) {

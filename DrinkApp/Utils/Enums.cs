@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DrinkApp.Utils {
+﻿namespace DrinkApp.Utils {
 
     public enum Status {
         //informational
@@ -72,5 +66,5 @@ namespace DrinkApp.Utils {
     public enum NotifyType {
         StatusMessage,
         ErrorMessage
-    };
+    }
 }
